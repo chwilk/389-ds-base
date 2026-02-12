@@ -275,8 +275,10 @@ class olSchema(object):
         self.raw_classes = []
 
         for (cn, rs) in self.raw_schema:
-            self.raw_attrs += ensure_list_str(rs['olcAttributeTypes'])
-            self.raw_classes += ensure_list_str(rs['olcObjectClasses'])
+            if 'olcAttributeTypes' in rs:
+                self.raw_attrs += ensure_list_str(rs['olcAttributeTypes'])
+            if 'olcObjectClasses' in rs:
+                self.raw_classes += ensure_list_str(rs['olcObjectClasses'])
 
         self.attrs = [olAttribute(x, self.log) for x in self.raw_attrs]
         self.classes = [olClass(x, self.log) for x in self.raw_classes]
